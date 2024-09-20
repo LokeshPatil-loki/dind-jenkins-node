@@ -37,15 +37,15 @@ pipeline {
             }
         }
 
-        // stage("SyncSecurity") {
-        //     steps {
-        //         echo 'Scanning using Snyk Security...'
-        //         snykSecurity(
-        //             snykInstallation: '<Your Snyk Installation Name>',
-        //             snykTokenId: '<Your Snyk API Token ID>',
-        //         )
-        //     }
-        // }
+        stage("SyncSecurity") {
+            steps {
+                echo 'Scanning using Snyk Security...'
+                snykSecurity(
+                    snykInstallation: 'sync@latest',
+                    snykTokenId: 'SYNK-TOKEN',
+                )
+            }
+        }
 
         stage('Build and Push Docker Image') {
             steps {
