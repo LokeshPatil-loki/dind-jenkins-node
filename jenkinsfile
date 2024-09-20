@@ -1,7 +1,7 @@
 pipeline {
   environment{
     registry="lokilokesh/dindNodeJenkins"
-    registryCredential = "dockerhub_id",
+    registryCredential = "dockerhub_id"
   }
   agent {
     docker { image 'node:16' }
