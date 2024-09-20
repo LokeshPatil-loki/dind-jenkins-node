@@ -1,0 +1,5 @@
+node_modules
+.github
+jenkinsfile
+jenkinsfile2
+package-lock.json

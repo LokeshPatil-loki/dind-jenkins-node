@@ -19,6 +19,12 @@ pipeline {
             sh "npm test"
         }
     }
-
+    stage("SyncSecutiry"){
+      echo 'Scanning using Synk Security...'
+      snykSecurity(
+          snykInstallation: '',
+          snykTokenId: '$SYNK-TOKEN',
+      )
+    }
   }
 }
