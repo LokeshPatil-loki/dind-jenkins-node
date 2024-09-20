@@ -19,10 +19,5 @@ pipeline {
             sh "npm test"
         }
     }
-    stage("Done") {
-        steps {
-            sh "echo 'Pipeline executed'"
-        }
-    }
   }
 }
