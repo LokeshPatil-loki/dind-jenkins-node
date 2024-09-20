@@ -1,4 +1,8 @@
 pipeline {
+  environment{
+    registry="lokilokesh/dindNodeJenkins"
+    registryCredential = "dockerhub_id",
+  }
   agent {
     docker { image 'node:16' }
   }
@@ -18,6 +22,22 @@ pipeline {
         steps {
             sh "npm test"
         }
+    }
+    stage('Building our image') {
+      steps {
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy our image') {
+      steps {
+        script {
+          docker.withRegistry('', registryCredential) {
+            dockerImage.push()
+          }
+        }
+      }
     }
   }
 }
