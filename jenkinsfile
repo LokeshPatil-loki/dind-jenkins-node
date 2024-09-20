@@ -21,7 +21,7 @@ pipeline {
     }
     stage("Done") {
         steps {
-            sh "Pipeline executed"
+            echo "Pipeline executed"
         }
     }
   }
