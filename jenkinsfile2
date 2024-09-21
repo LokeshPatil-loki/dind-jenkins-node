@@ -21,6 +21,7 @@ pipeline {
             }
             steps {
                 echo "Installing Dependencies"
+                sh "npm cache clean --force"
                 sh 'npm install'
             }
         }
