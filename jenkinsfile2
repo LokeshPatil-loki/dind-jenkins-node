@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo 'Scanning using Snyk Security...'
                 snykSecurity(
-                    snykInstallation: 'synk',
+                    snykInstallation: 'Synk-Sakunde21142637',
                     snykTokenId: 'SYNK-TOKEN',
                     additionalArguments: '--all-projects --prune-repeated-subdependencies --json-file-output=snyk-report.json'
                 )
