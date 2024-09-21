@@ -1,50 +1,42 @@
 pipeline {
-    agent none  // We'll define agents at the stage level
-    
+    agent any
     environment {
-        DOCKER_IMAGE = 'lokilokesh/dind-node-jenkins'
+        DOCKER_IMAGE = "lokilokesh/dind-node-jenkins"
     }
-    
     stages {
         stage('Checkout') {
-            agent any
             steps {
                 checkout scm
             }
         }
-        
         stage('Build and Test') {
             agent {
                 docker {
                     image 'node:16'
-                    args '-v ${WORKSPACE}:/app -w /app'  // Mount workspace and set working directory
+                    args '-v ${WORKSPACE}:/app'
                 }
             }
             steps {
-                echo 'Installing Dependencies'
-                sh 'npm cache clean --force'
-                sh 'npm install --no-audit'
-                sh 'npm test'
+                echo "Installing Dependencies"
+                sh "npm cache clean --force"
+                sh 'npm install --save'
+                sh "npm test"
             }
         }
-        
-        stage('SyncSecurity') {
-            agent any
+        stage("SyncSecurity") {
             steps {
                 echo 'Scanning using Snyk Security...'
                 snykSecurity(
                     snykInstallation: 'synk',
                     snykTokenId: 'SYNK-TOKEN',
-                    severity: 'critical'
+                    severity: "critical"
                 )
             }
         }
-        
         stage('Build and Push Docker Image') {
-            agent any
             steps {
                 script {
-                    def timestamp = new Date().format('yyyyMMdd_HHmmss')
+                    def timestamp = new Date().format("yyyyMMdd_HHmmss")
                     def imageTag = "${BUILD_NUMBER}-${timestamp}"
                     
                     sh "docker build -t ${DOCKER_IMAGE}:${imageTag} ."
@@ -60,7 +52,6 @@ pipeline {
             }
         }
     }
-    
     post {
         always {
             archiveArtifacts artifacts: 'snyk-report.json', allowEmptyArchive: true
