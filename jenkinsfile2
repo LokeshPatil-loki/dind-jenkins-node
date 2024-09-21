@@ -29,6 +29,7 @@ pipeline {
                 snykSecurity(
                     snykInstallation: 'synk',
                     snykTokenId: 'SYNK-TOKEN',
+                    severity: "critical"
                 )
             }
         }
