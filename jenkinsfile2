@@ -23,15 +23,18 @@ pipeline {
                 sh "npm test"
             }
         }
-        stage("SyncSecurity") {
-            steps {
-                echo 'Scanning using Snyk Security...'
-                snykSecurity(
-                    snykInstallation: 'Synk-Sakunde21142637',
-                    snykTokenId: 'SYNK-TOKEN',
-                )
+        withEnv(['DEBUG=*snyk*']) {
+            stage("SyncSecurity") {
+                steps {
+                    echo 'Scanning using Snyk Security...'
+                    snykSecurity(
+                        snykInstallation: 'Synk-Sakunde21142637',
+                        snykTokenId: 'SYNK-TOKEN',
+                    )
+                }
             }
         }
+
         stage('Build and Push Docker Image') {
             steps {
                 script {
