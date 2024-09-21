@@ -23,6 +23,7 @@ pipeline {
             }
         }
         stage('SyncSecurity') {
+            agent any
             steps {
                 echo 'Scanning using Snyk Security...'
                 snykSecurity(
