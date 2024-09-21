@@ -19,7 +19,7 @@ pipeline {
             steps {
                 echo "Installing Dependencies"
                 sh "npm cache clean --force"
-                sh 'npm install --no-audit'
+                sh 'npm install --save'
                 sh "npm test"
             }
         }
